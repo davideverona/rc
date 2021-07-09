@@ -43,7 +43,9 @@ module.exports = function (name, defaults, argv, parse) {
     join(home, '.' + name + 'rc')].forEach(addConfigFile)
   addConfigFile(cc.find('.'+name+'rc'))
   if (env.config) addConfigFile(env.config)
-  if (argv.config) addConfigFile(argv.config)
+  if (argv.config)
+    for(configFile of argv.config.split(','))
+      addConfigFile(configFile);
 
   return deepExtend.apply(null, configs.concat([
     env,
